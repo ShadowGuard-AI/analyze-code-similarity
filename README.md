@@ -1,3 +1,5 @@
+![Banner](banner.png)
+
 # analyze-code-similarity
 Compares two files or snippets of code and reports a similarity score based on common tokens or lines, aiding in plagiarism detection or identifying code reuse within a system. - Focused on Data analysis and reporting
 
