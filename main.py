@@ -1,6 +1,5 @@
 import argparse
 import logging
-import os
 import sys
 from collections import Counter
 
@@ -78,7 +77,11 @@ def calculate_similarity(content1, content2, mode='token'):
             counter1 = Counter(tokens1)
             counter2 = Counter(tokens2)
             common_tokens = sum((counter1 & counter2).values())
-            total_tokens = len(set(tokens1 + tokens2)) # Total unique tokens
+            # Multiset Jaccard: shared count over total count. The old
+            # denominator was the number of distinct tokens, so two files
+            # repeating one shared token scored above 1.0, breaking the
+            # documented 0.0 to 1.0 range the threshold check relies on.
+            total_tokens = len(tokens1) + len(tokens2) - common_tokens
             if total_tokens == 0:
                 return 0.0
             similarity = common_tokens / total_tokens
@@ -110,6 +113,10 @@ def main():
     if args.verbose:
         logging.getLogger().setLevel(logging.DEBUG)
         logging.debug("Verbose mode enabled.")
+
+    if not 0.0 <= args.threshold <= 1.0:
+        print("Threshold must be between 0.0 and 1.0.")
+        sys.exit(1)
 
     try:
         content1 = read_file(args.file1)
