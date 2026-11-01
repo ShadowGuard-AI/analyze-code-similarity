@@ -55,6 +55,11 @@ def tokenize(text):
     Returns:
         list: A list of tokens.
     """
+    # Whitespace split only. Punctuation stays attached and case
+    # counts, so "return x;" and "return x" are different tokens and a
+    # renamed variable lowers the score even when the logic is copied
+    # exactly. I keep it this crude because the score is a sorting
+    # hint for a human, not a plagiarism verdict.
     return text.split()
 
 
@@ -83,10 +88,20 @@ def calculate_similarity(content1, content2, mode='token'):
             # documented 0.0 to 1.0 range the threshold check relies on.
             total_tokens = len(tokens1) + len(tokens2) - common_tokens
             if total_tokens == 0:
+                # Two empty files land here and score 0.0, which main
+                # reports as dissimilar. Identical emptiness scoring as
+                # total difference is odd, but calling two empty files
+                # a match would be worse.
                 return 0.0
             similarity = common_tokens / total_tokens
             return similarity
         elif mode == 'line':
+            # Sets, not sequences: duplicate lines collapse and order
+            # is ignored entirely, so a file with its lines shuffled
+            # scores 1.0 against the original. That is the deliberate
+            # difference from token mode above, which counts repeats
+            # through the Counters. Line mode answers do these files
+            # use the same lines, nothing about arrangement.
             lines1 = content1.splitlines()
             lines2 = content2.splitlines()
             common_lines = set(lines1) & set(lines2)
@@ -125,6 +140,8 @@ def main():
         similarity_score = calculate_similarity(content1, content2, args.mode)
 
         print(f"Similarity score: {similarity_score:.4f}")
+        # The threshold is inclusive: a score exactly on it counts as
+        # similar. With the default that makes 0.7 itself a match.
         if similarity_score >= args.threshold:
             print("The files are considered similar.")
         else:
