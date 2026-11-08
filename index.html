@@ -3,95 +3,68 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>analyze-code-similarity: Wildfire Smoke Plume Watch</title>
-<meta name="description" content="Compares two files and reports a similarity score based on common tokens or lines. Standard library only.">
+<title>analyze-code-similarity: The Twin Sitting</title>
+<meta name="description" content="Compares two files by common tokens or lines and reports a similarity score against a threshold, default 0.7. Standard library only.">
 <style>
-@font-face{font-family:'Atma';src:url('fonts/Atma.ttf') format('truetype');}
-@font-face{font-family:'Archivo';src:url('fonts/Archivo.ttf') format('truetype');}
-:root{--ind:#1e2248;--white:#fafaf6;--green:#6eb280;--mag:#d62878}
-*{box-sizing:border-box} body{margin:0;background:var(--white);color:#22242e;font-family:'Archivo',sans-serif;line-height:1.65}
-h1,h2{font-family:'Atma',cursive;color:var(--ind);border-bottom:2px solid var(--ind);padding-bottom:.2rem}
-.hero{min-height:100vh;background:url('assets/intro-banner.png') center/cover no-repeat;display:flex;flex-direction:column;justify-content:flex-end;padding:2rem 6vw;background-color:#2c3060}
-.hero .panel{background:rgba(250,250,246,.93);padding:1.2rem 1.5rem;max-width:820px}
-.hero img.logo{width:190px;height:auto}
-img.banner{width:100%;height:auto;display:block}
-main{padding:0 6vw 3rem;max-width:1060px;margin:0 auto}
-nav{display:flex;flex-wrap:wrap;gap:.6rem;padding:1rem 6vw;background:var(--white)}
-.cabbtn{display:inline-block;background:linear-gradient(180deg,rgba(30,34,72,.10),rgba(30,34,72,.02));color:var(--ind);font-family:'Atma',cursive;text-decoration:none;padding:.5rem 1.2rem;border:3px solid #9aa0b4;transition:background .2s}
-.cabbtn:hover{background:var(--white)}
-.cabbtn:active{border-color:var(--ind)}
-.cabbtn:focus-visible{outline:3px solid var(--green);outline-offset:2px}
-a{color:var(--ind)} a .dial{display:inline-block;width:15px;height:15px;border-radius:50%;background:var(--white);border:2px solid var(--ind);margin-right:.4rem;vertical-align:-2px;position:relative}
-a .dial:after{content:'';position:absolute;left:6px;top:1px;width:2px;height:6px;background:var(--ind);transition:transform .2s;transform-origin:bottom}
-a:hover .dial:after{transform:rotate(80deg)}
-.mapboard{background:var(--ind);color:var(--white);padding:1.2rem 1.5rem;margin:1.4rem 0;border:3px solid var(--white);box-shadow:0 0 0 3px var(--ind);position:relative}
-.mapboard h2{color:var(--white);border-bottom-color:var(--white)}
-.mapboard:after{content:'';position:absolute;top:0;right:0;border-style:solid;border-width:0 22px 22px 0;border-color:transparent var(--white) transparent transparent}
-.mapboard pre{background:rgba(255,255,255,.12);color:#fff}
-pre{background:#eceef2;padding:1rem;overflow-x:auto;font-family:'Archivo',sans-serif;font-size:.92rem}
-.drift{height:16px;margin:2rem 0;position:relative}
-.drift:before,.drift:after{content:'';position:absolute;height:5px;border-radius:3px;background:var(--green)}
-.drift:before{left:4%;width:30%;top:2px}
-.drift:after{left:58%;width:34%;top:10px;background:#c9ccd8}
-.colmark{display:inline-block;width:9px;height:22px;background:linear-gradient(180deg,#f2f2ee,#c9ccd8);border:1px solid #9aa0b4;margin-right:.5rem;vertical-align:-4px}
-footer{padding:1rem 6vw 2.4rem;max-width:1060px;margin:0 auto}
+@font-face{font-family:'Chewy';src:url('fonts/Chewy-400.woff2') format('woff2');font-weight:400}
+@font-face{font-family:'Nunito';src:url('fonts/Nunito-400.woff2') format('woff2');font-weight:400}
+@font-face{font-family:'Nunito';src:url('fonts/Nunito-600.woff2') format('woff2');font-weight:600}
+@font-face{font-family:'Nunito';src:url('fonts/Nunito-700.woff2') format('woff2');font-weight:700}
+:root{--ground:#e9e7e2;--ink:#26241f;--paper:#f8f5ef;--line:#d8d2c4;--frame:#f3eee2;--accent:#a41f35;--accentdk:#7e1626;--accentlt:#eec3c9;--herotitle:#faf6ec;--herotext:#e8e0cd;--cardtitle:#3d2c1c;--stripbg:#33302a;--striptext:#f5f0e2;--footink:#7d7462;--headfont:'Chewy';--bodyfont:'Nunito'}
+*{box-sizing:border-box} body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--bodyfont),sans-serif;line-height:1.65}
+h1,h2{font-family:var(--headfont),sans-serif}
+.hero{background:linear-gradient(170deg,#5d6167 0%,#4a4f55 55%,#31353a 100%);padding:2.2rem 6vw 1.8rem;border-bottom:8px solid var(--accent)}
+.hero .inner{max-width:1020px;margin:0 auto}
+.hero img.wide{width:100%;height:auto;display:block;border:5px solid var(--frame);border-radius:4px;box-shadow:0 4px 18px rgba(0,0,0,.35)}
+.hero .row{display:flex;gap:1.1rem;align-items:flex-start;margin-top:1.2rem}
+.hero .row img{width:92px;height:92px;object-fit:cover;border-radius:6px;border:3px solid var(--frame);background:var(--frame)}
+.hero h1{margin:.1rem 0 .3rem;font-size:2.4rem;color:var(--herotitle)}
+.hero p{max-width:44rem;color:var(--herotext)}
+.hero a{color:var(--accentlt)}
+main{padding:0 6vw 3rem;max-width:1020px;margin:0 auto}
+.card{background:var(--paper);border:1px solid var(--line);border-top:8px solid #a68a64;padding:1.2rem 1.5rem;margin:1.6rem 0;box-shadow:0 2px 8px rgba(30,30,30,.14)}
+.card.accent{border-top-color:var(--accent)}
+.card h2{margin:.1rem 0 .5rem;font-size:1.6rem;color:var(--cardtitle)}
+.card p{margin:.4rem 0}
+.strip{background:var(--stripbg);color:var(--striptext);padding:1rem 1.2rem;overflow-x:auto;font-family:ui-monospace,Menlo,monospace;font-size:.92rem;border-radius:4px;border-left:6px solid var(--accent)}
+.btn{display:inline-block;background:var(--accent);color:#fff;font-family:var(--bodyfont),sans-serif;font-weight:700;text-decoration:none;padding:.55rem 1.1rem;border-radius:3px;margin:.3rem .4rem .3rem 0}
+.btn:hover{background:var(--frame);color:var(--accentdk)}.btn:active{transform:translateY(2px)}
+.btn:focus-visible{outline:2px dashed var(--accent);outline-offset:3px}
+a{color:var(--accentdk);font-weight:700}
+table{border-collapse:collapse}td{padding:.2rem .9rem .2rem 0;vertical-align:top}
+td:first-child{font-weight:700;color:var(--cardtitle);white-space:nowrap}
+ul{margin:.4rem 0;padding-left:1.2rem}li{margin:.25rem 0}
+.small{font-size:.92rem}
+footer{padding:0 6vw 2.5rem;max-width:1020px;margin:0 auto;color:var(--footink)}
 </style>
 </head>
 <body>
-<nav>
-<a class="cabbtn" href="#watch">Compare the pair</a>
-<a class="cabbtn" href="#modes">By tokens</a>
-<a class="cabbtn" href="#modes">By lines</a>
-<a class="cabbtn" href="#threshold">Report as similar at or above</a>
-</nav>
 <header class="hero">
-<div class="panel">
-<img class="logo" src="assets/logo.png" alt="Two smoke columns side by side with a lookout tower between their bases">
-<h1>analyze-code-similarity</h1>
-<p>Compares two files and reports a similarity score based on common tokens or lines. Standard library only, with no third party requirements to install.</p>
+<div class="inner">
+<img class="wide" src="assets/intro-banner.png" alt="The two oval portraits close up as a hand holds a magnifier over one face, enlarging a single eye, the matching portrait waiting beside it and the crimson ribbon at the top edge">
+<div class="row"><img src="assets/logo.png" alt="analyze-code-similarity logo: two oval walnut framed sepia portraits of the same sitter side by side on a slate surface, her hair loose in the first and pinned up in the second, with a crimson ribbon bow tied above the frames"><div><h1>analyze-code-similarity</h1><p>Compares two files and reports a similarity score based on common tokens or common lines.</p><p><a class="btn" href="https://github.com/ShadowGuard-AI/analyze-code-similarity">Open the repo</a> <a class="btn" href="#usage">Usage</a></p></div></div>
 </div>
 </header>
-<img class="banner" src="assets/banner.png" alt="The lookout horizon with two smoke columns and the station sign on the cab door">
 <main>
-<section id="watch">
-<h2><span class="colmark"></span>First entry: the watch itself</h2>
-<p>FILE1 is the first file, FILE2 is the second file, and the score is the watcher's answer about the pair.</p>
-</section>
-<div class="drift"></div>
-<section>
-<h2><span class="colmark"></span>Second entry: posting to the tower</h2>
-<pre>git clone https://github.com/ShadowGuard-AI/analyze-code-similarity
-cd analyze-code-similarity</pre>
-</section>
-<div class="drift"></div>
-<section>
-<h2><span class="colmark"></span>Third entry: taking a reading</h2>
-<pre>python3 main.py FILE1 FILE2 [-m token|line] [-t THRESHOLD] [-v]</pre>
-<p><a href="https://github.com/ShadowGuard-AI/analyze-code-similarity"><span class="dial"></span>Read the source on GitHub</a></p>
-</section>
-<div class="drift"></div>
-<section class="mapboard" id="modes">
-<h2>Fourth entry: the two ways of judging a column</h2>
-<p>Token mode, the default, splits on whitespace only. Its honest limit, printed with the method: punctuation stays attached to its word and case counts, so two files can read alike to a person and score apart here.</p>
-<p>Line mode works on whole lines. Its honest limit: lines are held in sets, so duplicate lines collapse and line order is ignored, so a rearranged file scores closer than its arrangement deserves.</p>
-</section>
-<div class="drift"></div>
-<section id="threshold">
-<h2><span class="colmark"></span>Fifth entry: the threshold</h2>
-<p><code>-t</code> takes a value from 0.0 to 1.0 and the default is 0.7. Scores below the threshold are reported as dissimilar.</p>
-<p>Boundary rule, given its own entry: the comparison uses greater than or equal, so a score sitting exactly on the threshold counts as similar.</p>
-<h2>The watcher's answer</h2>
-<p>The score for the pair, reported as similar or dissimilar against the threshold above.</p>
-</section>
-<div class="drift"></div>
-<section>
-<h2><span class="colmark"></span>Sightings already confirmed</h2>
-<p>Identical files score 1.0000 and are reported similar in both token and line mode. Unrelated files score 0.0000 and are reported dissimilar. A missing input file exits 1. A threshold outside 0.0 to 1.0 prints a message and exits 1. The <code>-v</code> switch enables verbose logging, and <code>-h</code> shows the help message and exits.</p>
-<p>License: MIT License, see LICENSE.</p>
-</section>
+<section class="card accent"><h2>How the score works</h2><p>Two files are laid side by side and what they share is counted, token by token or line by line. The score is compared against a threshold (default 0.7): scores below the threshold are reported as dissimilar, and the comparison uses greater than or equal, so a score exactly on the threshold counts as similar. Identical files score 1.0 and unrelated files score 0.0.</p></section>
+<section class="card" id="usage"><h2>Install and usage</h2><div class="strip">git clone https://github.com/ShadowGuard-AI/analyze-code-similarity<br>cd analyze-code-similarity<br><br>python3 main.py FILE1 FILE2 [-m token|line] [-t THRESHOLD] [-v]</div><p class="small">Standard library only. There are no third party requirements to install: <code>requirements.txt</code> is empty (0 bytes), as the README states.</p></section>
+<section class="card"><h2>Parameters</h2><table>
+<tr><td><code>FILE1</code>, <code>FILE2</code></td><td>the two files to compare</td></tr>
+<tr><td><code>-m</code>, <code>--mode</code></td><td>comparison mode, <code>token</code> (default) or <code>line</code></td></tr>
+<tr><td><code>-t</code>, <code>--threshold</code></td><td>similarity threshold from 0.0 to 1.0. Default: 0.7</td></tr>
+<tr><td><code>-v</code>, <code>--verbose</code></td><td>enable verbose logging</td></tr>
+<tr><td><code>-h</code></td><td>show help message and exit</td></tr>
+</table></section>
+<section class="card accent"><h2>Verified behavior and limits</h2><ul>
+<li>Identical files score 1.0000 and are reported similar, in both token and line mode.</li>
+<li>Unrelated files score 0.0000 and are reported dissimilar.</li>
+<li>A missing input file exits 1.</li>
+<li>A threshold outside 0.0 to 1.0 prints a message and exits 1.</li>
+<li>Token mode splits on whitespace only, so punctuation stays attached and case counts.</li>
+<li>Line mode uses sets, so duplicate lines collapse and line order is ignored.</li>
+</ul></section>
+<section class="card"><h2>The files</h2><p class="small"><code>main.py</code>, the comparator itself. <code>requirements.txt</code>, empty: standard library only. <code>LICENSE</code>, the MIT License. Full notes are in the <a href="https://github.com/ShadowGuard-AI/analyze-code-similarity">repo README</a>.</p></section>
 </main>
-<footer>
-<p>Theme: Wildfire Smoke Plume Watch. Type: Atma for headings, Archivo for reading, both SIL Open Font License 1.1. Lettering reference Technocra was used as reference only and is not embedded.</p>
-</footer>
+<footer><p>Two portraits under one light, and a number for how alike they are.</p></footer>
 </body>
 </html>
