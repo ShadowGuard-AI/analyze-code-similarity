@@ -1,10 +1,10 @@
-![One smoke column getting organised over the near ridge, a fainter smudge far to the right](intro-banner.png)
+![Intro scenery: the two oval portraits close up as a hand holds a magnifier over one face, enlarging a single eye, the matching portrait waiting beside it and the crimson ribbon at the top edge](intro-banner.png)
 
 # analyze-code-similarity
 
-*Wildfire Smoke Plume Watch: two columns, one pair of eyes, and a judgement about how alike they are.*
+![Wordmark banner: a studio wall of sepia portraits in walnut frames under one long brass light, the matching oval pair hung at the centre with a crimson ribbon bow above them, further single portraits ranked dimmer along the wall on both sides and a desk with a bound album below](banner.png)
 
-![Wordmark banner](banner.png)
+<p align="center"><img src="logo.png" alt="analyze-code-similarity logo: two oval walnut framed sepia portraits of the same sitter side by side on a slate surface, her hair loose in the first and pinned up in the second, with a crimson ribbon bow tied above the frames" width="200"></p>
 
 ![Animated themed scene](scene.svg)
 
