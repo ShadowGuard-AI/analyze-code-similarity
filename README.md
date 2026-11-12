@@ -8,11 +8,10 @@
 
 ![Animated themed scene](scene.svg)
 
-# analyze-code-similarity
 Compares two files and reports a similarity score based on common tokens or lines.
 
 ## Install
-```
+```sh
 git clone https://github.com/ShadowGuard-AI/analyze-code-similarity
 cd analyze-code-similarity
 ```
@@ -22,7 +21,7 @@ Standard library only. There are no third party requirements to install.
 ![Minor divider](sep-light.svg)
 
 ## Usage
-```
+```sh
 python3 main.py FILE1 FILE2 [-m token|line] [-t THRESHOLD] [-v]
 ```
 
